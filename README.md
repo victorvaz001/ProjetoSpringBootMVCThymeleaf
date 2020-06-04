@@ -8,6 +8,7 @@
 * PostgreSQL 9.5<br>
 * Hibernate<br>
 * Thymeleaf, integração com springMVC<br>
+* Maven
 
 ## Observações
 
