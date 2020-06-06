@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="https://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -14,5 +15,18 @@
 		<input name="idade"/>
 		<input type="submit" value="Salvar"/>
 	</form>
+	
+	
+	<table>
+			<!-- pessoa: será usada para mostrar na tela
+				 pessoas: e oque vai vir do banco de dados -->
+		<tr th:each = "pessoa : ${pessoas}">
+			<td th:text="${pessoa.id}"> </td>
+			<td th:text="${pessoa.nome}"> </td>
+			<td th:text="${pessoa.sobrenome}"> </td>
+		</tr>
+	</table>
+	
+	
 </body>
 </html>
