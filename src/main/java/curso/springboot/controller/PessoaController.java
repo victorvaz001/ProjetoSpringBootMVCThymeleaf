@@ -21,16 +21,22 @@ public class PessoaController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/salvarpessoa")
-	public String salvar(Pessoa pessoa) {
+	public ModelAndView salvar(Pessoa pessoa) {
 		pessoaRepository.save(pessoa);
-		return "cadastro/cadastropessoa";
+		
+		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
+		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();//vindo do banco
+		andView.addObject("pessoas", pessoasIt);
+		
+		
+		return andView;
 	}
 	//ModelAndView -> ligar o modelo de dados cadatrados no banco com a tela(view)
 	@RequestMapping(method = RequestMethod.GET, value = "/listapessoas")
 	public ModelAndView pessoas() {
 		
 		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
-		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
+		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();//vindo do banco
 		
 		//pessoas -> objeto vindo da view
 		andView.addObject("pessoas", pessoasIt);
