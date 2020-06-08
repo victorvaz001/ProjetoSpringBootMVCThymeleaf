@@ -26,6 +26,8 @@ public class PessoaController {
 		//passando objeto vazio
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa"); //retornar pra mesma tela
 		modelAndView.addObject("pessoaobj", new Pessoa()); //passando objeto pra tela, para ficar em edição
+		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();//vindo do banco
+		modelAndView.addObject("pessoas", pessoasIt);
 		return modelAndView;
 	}
 	
@@ -48,7 +50,6 @@ public class PessoaController {
 		
 		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
 		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();//vindo do banco
-		
 		//pessoas -> objeto vindo da view
 		andView.addObject("pessoas", pessoasIt);
 		andView.addObject("pessoaobj", new Pessoa()); //passando objeto pra tela, para ficar em edição(vazio)
@@ -86,6 +87,19 @@ public class PessoaController {
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");//retornar pra mesma tela
 		modelAndView.addObject("pessoas", pessoaRepository.findPessoaByName(nomepesquisa)); //consulta
 		modelAndView.addObject("pessoaobj", new Pessoa()); //retorna objeto vazio
+		
+		return modelAndView;
+		
+	}
+	
+	
+	@GetMapping("/telefones/{idpessoa}")
+	public ModelAndView telefones(@PathVariable("idpessoa") Long idpessoa) {
+		
+		Optional<Pessoa> pessoa = pessoaRepository.findById(idpessoa);//carregando pessoa
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/telefones"); //retornar pra mesma tela
+		modelAndView.addObject("pessoaobj", pessoa.get()); //passando objeto pra tela, para ficar em edição
 		
 		return modelAndView;
 		
