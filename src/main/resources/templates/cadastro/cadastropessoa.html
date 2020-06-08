@@ -5,68 +5,63 @@
 <meta charset="ISO-8859-1">
 <title>Cadastro de Pessoas</title>
 
+
 <!--Import Google Icon Font-->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
 
 <!--Import materialize.css-->
 <link type="text/css" rel="stylesheet"
-	href="materialize/css/materialize.css" media="screen,projection" />
+	href="/materialize/css/materialize.css" media="screen,projection" />
 <link type="text/css" rel="stylesheet"
-	href="materialize/css/materialize.min" media="screen,projection" />
+	href="/materialize/css/materialize.min" media="screen,projection" />
 
 
 </head>
 <body>
-	<div class="row">
-
-		<form class="col s12" action="salvarpessoa" method="post">
+	
+		<!-- th:object="pessoaobj" -> carrega os dados na tela para edição -->
+		<form  action="salvarpessoa" method="post" th:object="${pessoaobj}">
 		
-			<div class="row">
-				<div class="input-field col s6">
-					<input id="primeiro_nome" type="text" class="validate" name="nome" th:required="true">
-					<label for="primeiro_nome">Primeiro nome</label>
-				</div>
-			</div>
+			<label>ID:</label>
+			<input name="id" th:field="*{id}" readonly="readonly">
+		
+			<label>Nome:</label>
+			<input name="nome" th:required="true" th:field="*{nome}">
 			
-			<div class="row">
-				<div class="input-field col s6">
-					<input id="sobre_nome" type="text" class="validate" name="sobrenome" th:required="true"> 
-					<label for="sobre_nome">Sobrenome</label>
-				</div>
-			</div>
+			<label>Sobrenome</label>
+			<input type="text" class="validate" name="sobrenome" th:required="true" th:field="*{sobrenome}"> 
 			
-			<div class="row">
-				<div class="input-field col s6">
-					<input id="idade" type="number" class="validate" name="idade" th:required="true"> 
-					<label for="idade">Idade</label>
-				</div>
-			</div>
-			
+			<label>Idade</label>
+			<input type="number" class="validate" name="idade" th:required="true" th:field="*{idade}"> 
+
 			<input class="waves-effect waves-light btn" type="submit" value="Salvar" />
 		</form>
-	</div>
+
 
 	<a href="/listapessoas">Lista pessoas</a>
 
 	<table class="highlight">
 		<!-- pessoa: será usada para mostrar na tela
 				 pessoas: e oque vai vir do banco de dados -->
-				 
+			 
 		<thead>
 			<tr> 
 				<th>ID: </th>
 				<th>Nome: </th>
 				<th>Sobre nome: </th>
 				<th>Idade: </th>
+				<th>Acoes: </th>
 			</tr>
 		</thead>
+	
 				 
 		<tr th:each="pessoa : ${pessoas}">
 			<td th:text="${pessoa.id}"></td>
 			<td th:text="${pessoa.nome}"></td>
 			<td th:text="${pessoa.sobrenome}"></td>
 			<td th:text="${pessoa.idade}"></td>
+			<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Editar</a></td>
 		</tr>
 	</table>
 
