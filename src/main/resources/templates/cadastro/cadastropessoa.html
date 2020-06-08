@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Cadastro de Pessoas</title>
 
 <!--Import Google Icon Font-->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -24,14 +24,14 @@
 		
 			<div class="row">
 				<div class="input-field col s6">
-					<input id="primeiro_nome" type="text" class="validate" name="nome" >
+					<input id="primeiro_nome" type="text" class="validate" name="nome" th:required="true">
 					<label for="primeiro_nome">Primeiro nome</label>
 				</div>
 			</div>
 			
 			<div class="row">
 				<div class="input-field col s6">
-					<input id="sobre_nome" type="text" class="validate" name="sobrenome"> 
+					<input id="sobre_nome" type="text" class="validate" name="sobrenome" th:required="true"> 
 					<label for="sobre_nome">Sobrenome</label>
 				</div>
 			</div>
@@ -49,13 +49,24 @@
 
 	<a href="/listapessoas">Lista pessoas</a>
 
-	<table>
+	<table class="highlight">
 		<!-- pessoa: será usada para mostrar na tela
 				 pessoas: e oque vai vir do banco de dados -->
+				 
+		<thead>
+			<tr> 
+				<th>ID: </th>
+				<th>Nome: </th>
+				<th>Sobre nome: </th>
+				<th>Idade: </th>
+			</tr>
+		</thead>
+				 
 		<tr th:each="pessoa : ${pessoas}">
 			<td th:text="${pessoa.id}"></td>
 			<td th:text="${pessoa.nome}"></td>
 			<td th:text="${pessoa.sobrenome}"></td>
+			<td th:text="${pessoa.idade}"></td>
 		</tr>
 	</table>
 
