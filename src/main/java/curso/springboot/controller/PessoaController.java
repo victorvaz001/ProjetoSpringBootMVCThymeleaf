@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import curso.springboot.model.Pessoa;
@@ -74,6 +76,17 @@ public class PessoaController {
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa"); //retornar pra mesma tela
 		modelAndView.addObject("pessoas", pessoaRepository.findAll()); //carrega a lista de pessoas, menos oque foi removido
 		modelAndView.addObject("pessoaobj", new Pessoa()); //retorna o objeto vazio
+		return modelAndView;
+		
+	}
+	
+	@PostMapping("**/pesquisarpessoa")
+	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");//retornar pra mesma tela
+		modelAndView.addObject("pessoas", pessoaRepository.findPessoaByName(nomepesquisa)); //consulta
+		modelAndView.addObject("pessoaobj", new Pessoa()); //retorna objeto vazio
+		
 		return modelAndView;
 		
 	}

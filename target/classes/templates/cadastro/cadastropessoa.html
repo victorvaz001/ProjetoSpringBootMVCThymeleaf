@@ -2,7 +2,7 @@
 <html xmlns="https://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Cadastro de Pessoas</title>
 
 
@@ -20,7 +20,7 @@
 </head>
 <body>
 	
-		<!-- th:object="pessoaobj" -> carrega os dados na tela para edição -->
+		<!-- th:object="pessoaobj" -> carrega os dados na tela para ediÃ§Ã£o -->
 		<form  action="salvarpessoa" method="post" th:object="${pessoaobj}">
 		
 			<label>ID:</label>
@@ -38,11 +38,21 @@
 			<input class="waves-effect waves-light btn" type="submit" value="Salvar" />
 		</form>
 
-
+	<br/>
+	<br/>
 	<a href="/listapessoas">Lista pessoas</a>
-
+	<br/>
+	<br/>
+	
+	<form action="pesquisarpessoa" method="post">
+	<label>Pesquisa por nome:</label>
+	<input name="nomepesquisa">
+	<input class="waves-effect waves-light btn" type="submit" value="Buscar">
+	</form>
+	<br/>
+	<br/>
 	<table class="highlight centered">
-		<!-- pessoa: será usada para mostrar na tela
+		<!-- pessoa: serÃ¡ usada para mostrar na tela
 				 pessoas: e oque vai vir do banco de dados -->
 			 
 		<thead>
@@ -51,7 +61,7 @@
 				<th>Nome: </th>
 				<th>Sobre nome: </th>
 				<th>Idade: </th>
-				<th colspan="2">Acoes: </th>
+				<th colspan="2">AÃ§Ãµes: </th>
 			</tr>
 		</thead>
 	
