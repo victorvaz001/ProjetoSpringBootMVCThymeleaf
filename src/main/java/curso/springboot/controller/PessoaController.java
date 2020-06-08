@@ -65,5 +65,17 @@ public class PessoaController {
 		return modelAndView;
 		
 	}
+	
+	@GetMapping("/removerpessoa/{idpessoa}")
+	public ModelAndView excluir(@PathVariable("idpessoa") Long idpessoa) {
+		
+		pessoaRepository.deleteById(idpessoa);
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa"); //retornar pra mesma tela
+		modelAndView.addObject("pessoas", pessoaRepository.findAll()); //carrega a lista de pessoas, menos oque foi removido
+		modelAndView.addObject("pessoaobj", new Pessoa()); //retorna o objeto vazio
+		return modelAndView;
+		
+	}
 
 }

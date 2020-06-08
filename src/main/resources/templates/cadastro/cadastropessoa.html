@@ -41,7 +41,7 @@
 
 	<a href="/listapessoas">Lista pessoas</a>
 
-	<table class="highlight">
+	<table class="highlight centered">
 		<!-- pessoa: será usada para mostrar na tela
 				 pessoas: e oque vai vir do banco de dados -->
 			 
@@ -51,7 +51,7 @@
 				<th>Nome: </th>
 				<th>Sobre nome: </th>
 				<th>Idade: </th>
-				<th>Acoes: </th>
+				<th colspan="2">Acoes: </th>
 			</tr>
 		</thead>
 	
@@ -62,6 +62,7 @@
 			<td th:text="${pessoa.sobrenome}"></td>
 			<td th:text="${pessoa.idade}"></td>
 			<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Editar</a></td>
+			<td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Excluir</a></td>
 		</tr>
 	</table>
 
