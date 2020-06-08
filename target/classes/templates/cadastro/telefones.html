@@ -64,6 +64,13 @@
 		</form> 
 	</div>
 	
+	<table class="striped">
+		<tr th:each="fone : ${telefones}"> 
+			<td th:text="${fone.numero}"/>
+			<td th:text="${fone.tipo}"/> 
+		</tr>
+	</table>
+	
 	<!--JavaScript at end of body for optimized loading-->
 	<script type="text/javascript" src="materialize/js/materialize.js"></script>
 	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>

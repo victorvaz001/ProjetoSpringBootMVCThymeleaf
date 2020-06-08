@@ -105,6 +105,7 @@ public class PessoaController {
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones"); //retornar pra mesma tela
 		modelAndView.addObject("pessoaobj", pessoa.get()); //passando objeto pra tela, para ficar em edição
+		modelAndView.addObject("telefones", telefoneRepository.getTelefones(idpessoa)); //carrega telefones da pessoa
 		
 		return modelAndView;
 		
@@ -121,6 +122,7 @@ public class PessoaController {
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones"); //retornar pra mesma tela
 		modelAndView.addObject("pessoaobj", pessoa);//objeto pai sendo mostrado
+		modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
 		return modelAndView;
 	}
 
