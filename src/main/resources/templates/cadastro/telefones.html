@@ -35,7 +35,7 @@
 	
 	<a class="waves-effect waves-light btn" href="/cadastropessoa">Cad. Pessoa</a>
 	
-	<!-- th:each -> interação com objeto -->
+	<!-- th:each -> interação com objeto, contem os dados -->
 	<div th:each="p: ${pessoaobj}">
 		<div class="row">
 			<p>ID: <span th:text="${p.id}"> </span></p>
@@ -45,6 +45,24 @@
 		</div>
 	</div>
 	
+	<h5> Telefones </h5>
+	<div class="row">
+		<form th:action="@{/addfonePessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="post" class="col s12"> 
+			<div class="row">
+				<div class="input-field col s6">
+					<label class="active" for="numero">Número</label>
+					<input id="numero" name="numero" class="validate">
+				</div>
+				
+				<div class="input-field col s6">
+					<label class="active" for="tipo">Tipo</label>
+					<input id="tipo" name="tipo" class="validate">
+				</div>
+				
+				<input type="submit" value="Adicionar" class="waves-effect waves-light btn">
+			</div>
+		</form> 
+	</div>
 	
 	<!--JavaScript at end of body for optimized loading-->
 	<script type="text/javascript" src="materialize/js/materialize.js"></script>

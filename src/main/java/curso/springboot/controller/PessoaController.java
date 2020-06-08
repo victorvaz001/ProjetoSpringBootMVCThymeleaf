@@ -13,13 +13,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import curso.springboot.model.Pessoa;
+import curso.springboot.model.Telefone;
 import curso.springboot.repository.PessoaRepository;
+import curso.springboot.repository.TelefoneRepository;
 
 @Controller
 public class PessoaController {
 	
 	@Autowired //injeção de dependencias
 	private PessoaRepository  pessoaRepository;
+	
+	@Autowired
+	private TelefoneRepository telefoneRepository;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa") //redirecionamento de URL
 	public ModelAndView inicio() {
@@ -103,6 +108,20 @@ public class PessoaController {
 		
 		return modelAndView;
 		
+	}
+	
+	//**, ignora oque vem antes e intercpeta oque está depois
+	@PostMapping("**/addfonePessoa/{pessoaid}")
+	public ModelAndView addfonePessoa(Telefone telefone, @PathVariable("pessoaid") Long pessoaid) {
+	
+		Pessoa pessoa = pessoaRepository.findById(pessoaid).get(); //consulta a pessoa
+		telefone.setPessoa(pessoa); //pega o telefone e adciona para a pessoa
+		
+		telefoneRepository.save(telefone);//salva, amarra no banco
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/telefones"); //retornar pra mesma tela
+		modelAndView.addObject("pessoaobj", pessoa);//objeto pai sendo mostrado
+		return modelAndView;
 	}
 
 }
