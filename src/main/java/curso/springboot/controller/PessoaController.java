@@ -1,9 +1,15 @@
 package curso.springboot.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +44,24 @@ public class PessoaController {
 	
 	//**/salvarpessoa" -> ignora qualquer coisa antes que ele intercepte o salvar pessoa de qualquer forma /savalarpessoa
 	@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa")
-	public ModelAndView salvar(Pessoa pessoa) {
+	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
+		
+		if(bindingResult.hasErrors()) {
+			ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");//retorna na mesma tela
+			Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();//vindo do banco, consultar todos
+			modelAndView.addObject("pessoas", pessoasIt);//continuar mostrando a lista de pessoas
+			modelAndView.addObject("pessoaobj", pessoa); //vai dar o erro e vai continuar com o formulario preenchido, com os objetos
+			
+			//mostar as validações
+			List<String> msg = new ArrayList<String>();
+			for(ObjectError objectError : bindingResult.getAllErrors()) { //varrendo a lista de erros
+				msg.add(objectError.getDefaultMessage()); //vem das anotações, @NotNull, @NotEmpty do model Pessoa
+			}
+			
+			modelAndView.addObject("msg", msg);
+			return modelAndView;
+		}
+		
 		pessoaRepository.save(pessoa);
 		
 		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
@@ -49,6 +72,7 @@ public class PessoaController {
 		
 		return andView;
 	}
+	
 	//ModelAndView -> ligar o modelo de dados cadatrados no banco com a tela(view)
 	@RequestMapping(method = RequestMethod.GET, value = "/listapessoas")
 	public ModelAndView pessoas() {
@@ -114,15 +138,40 @@ public class PessoaController {
 	//**, ignora oque vem antes e intercpeta oque está depois
 	@PostMapping("**/addfonePessoa/{pessoaid}")
 	public ModelAndView addfonePessoa(Telefone telefone, @PathVariable("pessoaid") Long pessoaid) {
-	
+
+		
 		Pessoa pessoa = pessoaRepository.findById(pessoaid).get(); //consulta a pessoa
-		telefone.setPessoa(pessoa); //pega o telefone e adciona para a pessoa
+		
+		if(telefone != null && telefone.getNumero().isEmpty() || telefone.getTipo().isEmpty()) {
+			
+			ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+			modelAndView.addObject("pessoaobj", pessoa);
+			modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
+			
+			List<String> msg = new ArrayList<String>();
+			if(telefone.getNumero().isEmpty()) {
+				msg.add("Numero deve ser informado");
+			}
+			
+			if(telefone.getTipo().isEmpty()) {
+				msg.add("Tipo de ser informado");
+			}
+			
+			
+			modelAndView.addObject("msg", msg);
+			
+			return modelAndView;
+			
+		}
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/telefones"); //retornar pra mesma tela
+		telefone.setPessoa(pessoa);
 		
 		telefoneRepository.save(telefone);//salva, amarra no banco
 		
-		ModelAndView modelAndView = new ModelAndView("cadastro/telefones"); //retornar pra mesma tela
 		modelAndView.addObject("pessoaobj", pessoa);//objeto pai sendo mostrado
 		modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));//carrega os telefones
+		
 		return modelAndView;
 	}
 	

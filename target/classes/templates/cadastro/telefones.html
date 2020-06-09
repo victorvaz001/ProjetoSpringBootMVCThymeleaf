@@ -31,6 +31,13 @@
 </head>
 <body>
 	<h3>Spring Boot + Thymeleaf + Material Desing Lite </h3> <br/>
+	
+	<br/>
+		<div th:each = "m : ${msg}">
+			<span th:text = "${m}"> </span>
+		</div>
+	<br/>
+	
 	<h5>Cadastro de pessoas</h5>
 	
 	<a class="waves-effect waves-light btn" href="/cadastropessoa">Cad. Pessoa</a>
