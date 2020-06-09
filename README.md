@@ -1,5 +1,5 @@
 # Projeto - Spring Boot MVC - Thymeleaf
-  Projeto para utilização do SpringBoot + Thymeleaf + MVC, criação de cadastro de forma simples, utilizando a interface CrudRepository <br>
+  Projeto para utilização do SpringBoot + Thymeleaf + MVC + Materialize Desing, criação de cadastro de forma simples, utilizando a interface CrudRepository <br>
   
 ## Tecnologias
 
@@ -8,7 +8,9 @@
 * PostgreSQL 9.5<br>
 * Hibernate<br>
 * Thymeleaf, integração com springMVC<br>
+* Materialize Desing
 * Maven
+* Spring Security
 
 ## Observações
 
