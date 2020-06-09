@@ -122,8 +122,22 @@ public class PessoaController {
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones"); //retornar pra mesma tela
 		modelAndView.addObject("pessoaobj", pessoa);//objeto pai sendo mostrado
-		modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
+		modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));//carrega os telefones
 		return modelAndView;
+	}
+	
+	@GetMapping("/removertelefone/{idtelefone}")
+	public ModelAndView removerTelefone(@PathVariable("idtelefone") Long idtelefone) {
+		
+		Pessoa pessoa = telefoneRepository.findById(idtelefone).get().getPessoa();//carrega o objeto telefone
+		
+		telefoneRepository.deleteById(idtelefone); //deleta o telefona
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/telefones"); //retornar pra mesma tela
+		modelAndView.addObject("pessoaobj", pessoa);//objeto pai sendo mostrado
+		modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoa.getId()));//carrega os telefones, menos oque foi removido
+		return modelAndView;
+		
 	}
 
 }
