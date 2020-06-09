@@ -32,12 +32,6 @@
 <body>
 	<h3>Spring Boot + Thymeleaf + Material Desing Lite </h3> <br/>
 	
-	<br/>
-		<div th:each = "m : ${msg}">
-			<span th:text = "${m}"> </span>
-		</div>
-	<br/>
-	
 	<h5>Cadastro de pessoas</h5>
 	
 	<a class="waves-effect waves-light btn" href="/cadastropessoa">Cad. Pessoa</a>
@@ -53,8 +47,14 @@
 	</div>
 	
 	<h5> Telefones </h5>
+	<br/>
+		<div th:each = "m : ${msg}">
+			<span th:text = "${m}"> </span>
+		</div>
+	<br/>
 	<div class="row">
-		<form th:action="@{/addfonePessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="post" class="col s12"> 
+		<form th:action="@{/addfonePessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="post" class="col s12"
+		onsubmit="return validarCampos()? true : false"> 
 			<div class="row">
 				<div class="input-field col s6">
 					<label class="active" for="numero">Número</label>
@@ -82,5 +82,26 @@
 	<!--JavaScript at end of body for optimized loading-->
 	<script type="text/javascript" src="materialize/js/materialize.js"></script>
 	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+	
+	<script type="text/javascript">
+		function validarCampos(){
+			
+			numero = document.getElementById('numero').value;
+			tipo = document.getElementById('tipo').value;
+			
+			if(numero === ''){
+				alert('Número deve ser informado');
+				document.getElementById('numero').focus();
+				return false;
+			}
+			else if(tipo === ''){
+				alert('Tipo deve ser informado');
+				document.getElementById('tipo').focus();
+				return false;
+			}
+			
+			return true;
+		}
+	</script>
 </body>
 </html>

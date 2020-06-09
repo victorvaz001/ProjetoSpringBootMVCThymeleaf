@@ -41,7 +41,8 @@
 		</div>
 	<br/>
 		<!-- th:object="pessoaobj" -> carrega os dados na tela para edição -->
-		<form  action="salvarpessoa" id="formpessoa" method="post" th:object="${pessoaobj}" class="col s12">
+		<form  action="salvarpessoa" id="formpessoa" method="post" th:object="${pessoaobj}" class="col s12"
+			onsubmit="return validarCampos()? true : false">
 
 			<div class="row">
 				<div class="input-fiel col s6">
@@ -123,5 +124,34 @@
 	<!--JavaScript at end of body for optimized loading-->
 	<script type="text/javascript" src="materialize/js/materialize.js"></script>
 	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+	
+	<script type="text/javascript">
+		function validarCampos(){
+			
+			nome = document.getElementById('nome').value;
+			sobrenome = document.getElementById('sobrenome').value;
+			idade = document.getElementById('idade').value;
+			
+			
+			if(nome === ''){
+				alert('Nome deve ser informado')
+				document.getElementById('nome').focus();
+				return false;
+			}
+			else if (sobrenome === ''){
+				alert('Sobrenome deve ser informado')
+				document.getElementById('sobrenome').focus();
+				return false;
+			}
+			else if (idade  === '0' || idade === ''){
+				alert('Idade deve ser informada e deve ser diferente de 0(zero)')
+				document.getElementById('idade').focus();
+				return false;
+			}
+
+			return true;
+			
+		}
+	</script>
 </body>
 </html>
