@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="https://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+
 <meta charset="UTF-8">
 <title>Cadastro de Pessoas</title>
 
@@ -63,7 +65,7 @@
 				</div>
 			</div>
 			
-			<div class="row">
+			<div class="row" sec:authorize="hasAnyRole('ROLE_TECNICO')">
 				<div class="input-field col s12">
 					<label for="idade" class="active">Idade</label>
 					<input  id="idade"  name="idade" th:field="*{idade}" class="validate"> 
