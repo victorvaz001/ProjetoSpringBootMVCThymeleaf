@@ -60,10 +60,19 @@
 			</div>
 
 			<div class="row">
-				<div class="input-field col s12">
+				<div class="input-field col s6">
 					<label for="sobrenome" class="active">Sobre nome:</label> 
 					<input id="sobrenome" class="validate" name="sobrenome"
 					  th:field="*{sobrenome}" placeholder="Informe o sobrenome da pessoa">
+				</div>
+				
+				<div class="input-field col s6">
+					<label for="sexopessoa" class="active">Sexo</label>
+					<select class="browser-default" th:field="*{sexopessoa}">
+						<option value="" disabled selected>--[Selecione]--</option>
+						<option value="MASCULINO" th:text="Masculino"/>
+						<option value="FEMININO" th:text="Feminino"/> 
+					</select>
 				</div>
 			</div>
 			
