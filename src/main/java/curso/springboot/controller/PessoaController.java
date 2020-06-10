@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class PessoaController {
 	
 	@Autowired
 	private TelefoneRepository telefoneRepository;
+	
+	@Autowired
+	private ReportUtil reportUtil;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa") //redirecionamento de URL
 	public ModelAndView inicio() {
@@ -130,6 +135,16 @@ public class PessoaController {
 		modelAndView.addObject("pessoaobj", new Pessoa()); //retorna objeto vazio
 		
 		return modelAndView;
+		
+	}
+	
+	@GetMapping("**/pesquisarpessoa")
+	public void imprimePDF(@RequestParam("nomepesquisa") String nomepesquisa,
+								  @RequestParam("pesquisasexo") String pesquisasexo,
+								  HttpServletRequest request,
+								  HttpServletResponse response) {
+		
+		System.out.println("INVOCADO!");
 		
 	}
 	
