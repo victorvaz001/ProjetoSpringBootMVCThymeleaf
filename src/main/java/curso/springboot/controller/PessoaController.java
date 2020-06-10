@@ -117,8 +117,16 @@ public class PessoaController {
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa,
 								  @RequestParam("pesquisasexo") String pesquisasexo) {
 		
+		List<Pessoa> pessoas = new ArrayList<Pessoa>();
+		
+		if(pesquisasexo != null && !pesquisasexo.isEmpty()) {
+			pessoas = pessoaRepository.findPessoaByNSexo(nomepesquisa, pesquisasexo);
+		} else {
+			pessoas = pessoaRepository.findPessoaByName(nomepesquisa);
+		}
+		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");//retornar pra mesma tela
-		modelAndView.addObject("pessoas", pessoaRepository.findPessoaByName(nomepesquisa)); //consulta
+		modelAndView.addObject("pessoas", pessoas); //consulta
 		modelAndView.addObject("pessoaobj", new Pessoa()); //retorna objeto vazio
 		
 		return modelAndView;
