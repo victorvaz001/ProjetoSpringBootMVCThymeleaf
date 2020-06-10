@@ -55,7 +55,7 @@
 				</div>
 				<div class="input-fiel col s6">
 					<label for="nome" class="active">Nome:</label> 
-					<input name="nome" th:field="*{nome}" id="nome" class="validate">
+					<input name="nome" th:field="*{nome}" id="nome" class="validate"  placeholder="Informe o nome da pessoa">
 				</div>
 			</div>
 
@@ -63,56 +63,56 @@
 				<div class="input-field col s12">
 					<label for="sobrenome" class="active">Sobre nome:</label> 
 					<input id="sobrenome" class="validate" name="sobrenome"
-					  th:field="*{sobrenome}">
+					  th:field="*{sobrenome}" placeholder="Informe o sobrenome da pessoa">
 				</div>
 			</div>
 			
 			<div class="row" sec:authorize="hasAnyRole('ROLE_TECNICO')">
 				<div class="input-field col s12">
 					<label for="idade" class="active">Idade</label>
-					<input  id="idade"  name="idade" th:field="*{idade}" class="validate"> 
+					<input  id="idade"  name="idade" th:field="*{idade}" class="validate" placeholder="Informe a Idade"> 
 				</div>
 			</div>	
 			
 			<div class="row">
 				<div class="input-field col s12">
 					<label for="cep" class="active">Cep</label>
-					<input  id="cep"  name="cep" th:field="*{cep}" class="validate"> 
+					<input  id="cep"  name="cep" th:field="*{cep}" class="validate" placeholder="Informe um Cep valido"> 
 				</div>
 			</div>
 			
 			<div class="row">
 				<div class="input-field col s12">
 					<label for="rua" class="active">Rua</label>
-					<input  id="rua"  name="rua" th:field="*{rua}" class="validate"> 
+					<input  id="rua"  name="rua" th:field="*{rua}" class="validate" placeholder="Informe o nome da Rua"> 
 				</div>
 			</div>
 			
 			<div class="row">
 				<div class="input-field col s12">
 					<label for="bairro" class="active">Bairro</label>
-					<input  id="bairro"  name="bairro" th:field="*{bairro}" class="validate"> 
+					<input  id="bairro"  name="bairro" th:field="*{bairro}" class="validate" placeholder="Informe o nome do Bairro"> 
 				</div>
 			</div>
 			
 			<div class="row">
 				<div class="input-field col s12">
 					<label for="cidade" class="active">Cidade</label>
-					<input  id="cidade"  name="bairro" th:field="*{cidade}" class="validate"> 
+					<input  id="cidade"  name="bairro" th:field="*{cidade}" class="validate" placeholder="Informe o nome da Cidade"> 
 				</div>
 			</div>
 			
 			<div class="row">
 				<div class="input-field col s12">
 					<label for="uf" class="active">Estado</label>
-					<input  id="uf"  name="bairro" th:field="*{uf}" class="validate"> 
+					<input  id="uf"  name="bairro" th:field="*{uf}" class="validate" placeholder="Informe o nome do Estado"> 
 				</div>
 			</div>
 			
 			<div class="row">
 				<div class="input-field col s12">
 					<label for="ibge" class="active">IBGE</label>
-					<input  id="ibge"  name="bairro" th:field="*{ibge}" class="validate"> 
+					<input  id="ibge"  name="bairro" th:field="*{ibge}" class="validate" placeholder="Informe o nome do IBGE"> 
 				</div>
 			</div>
 			
