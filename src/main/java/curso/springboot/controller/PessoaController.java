@@ -46,6 +46,9 @@ public class PessoaController {
 	@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa")
 	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
 		
+		//carregando os telefones do objeto pessoa
+		pessoa.setTelefones(telefoneRepository.getTelefones(pessoa.getId()));
+		
 		if(bindingResult.hasErrors()) {
 			ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");//retorna na mesma tela
 			Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();//vindo do banco, consultar todos
