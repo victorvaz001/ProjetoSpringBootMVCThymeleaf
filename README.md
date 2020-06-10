@@ -1,5 +1,5 @@
 # Projeto - Spring Boot MVC - Thymeleaf
-  Projeto para utilização do SpringBoot + Thymeleaf + MVC + Materialize Desing, criação de cadastro de forma simples, utilizando a interface CrudRepository <br>
+  Projeto para utilização do SpringBoot + Thymeleaf + MVC + Materialize Desing, criação de cadastro de forma simples, utilizando a interface CrudRepository, neste projeto contem uma parte de consumo de Web Service<br> para Cep utitilizando o site https://viacep.com.br/ <br>
   
 ## Tecnologias
 
@@ -11,6 +11,7 @@
 * Materialize Desing
 * Maven
 * Spring Security
+* Jquery -> para consumir um Web Service do ViaCep
 
 ## Observações
 
