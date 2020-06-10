@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="https://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+	<!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+ <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
+	  <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min"  media="screen,projection"/>
+
+<style type="text/css">
+
+	form input[type=submit]{
+	color: white;
+	}
+</style>
+
+</head>
+<body>
+	
+	<h1>Acesso ao sistema</h1>
+	<form th:action="@{/login}" method="post" class="col s12">
+	
+		<div class="row">
+			<div class="input-fiel col s6">
+				<label>Login </label>
+				<input type="text" name="username">
+				<input type="password" name="password">
+			</div>
+		</div>
+		
+		<div class="row">
+				<div class="input-field col s6">
+				<input class="waves-effect waves-light btn"
+				 type="submit" name="logar" value="Logar" />
+				</div>
+			</div>
+		
+	</form>
+		   
+   
+   	<!--JavaScript at end of body for optimized loading-->
+      <script type="text/javascript" src="materialize/js/materialize.js"></script>
+      <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+</body>
+</html>
