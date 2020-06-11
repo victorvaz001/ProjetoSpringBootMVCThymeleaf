@@ -142,10 +142,48 @@ public class PessoaController {
 	public void imprimePDF(@RequestParam("nomepesquisa") String nomepesquisa,
 								  @RequestParam("pesquisasexo") String pesquisasexo,
 								  HttpServletRequest request,
-								  HttpServletResponse response) {
+								  HttpServletResponse response) throws Exception {
 		
-		System.out.println("INVOCADO!");
+		List<Pessoa> pessoas = new ArrayList<Pessoa>();
+		//caso tenha nome e sexo informado, irá buscar
+		if(pesquisasexo != null && !pesquisasexo.isEmpty() 
+			&& nomepesquisa != null && !nomepesquisa.isEmpty()) {/*Busca por nome e sexo*/
+			
+			pessoaRepository.findPessoaByNSexo(nomepesquisa, pesquisasexo);
+			
+		}else if(nomepesquisa != null && !nomepesquisa.isEmpty()) {/*Busca somente por nome*/
+			pessoas = pessoaRepository.findPessoaByName(nomepesquisa);
 		
+		
+		}else if(pesquisasexo != null && !pesquisasexo.isEmpty()) {/*Busca somente por sexo*/
+			pessoas = pessoaRepository.findPessoaBySexo(pesquisasexo);
+		
+		}
+		
+		else {/*Busca todos*/
+			
+			Iterable<Pessoa> iterator = pessoaRepository.findAll();
+			for (Pessoa pessoa : iterator) {
+				pessoas.add(pessoa);
+			}
+		}
+		
+		/*Chamar o serviço que faz a geração do relatório*/
+		byte[] pdf = reportUtil.geraRelatorio(pessoas, "pessoa", request.getServletContext());
+		
+		/*Tamanho da resposta, para o navegador*/
+		response.setContentLength(pdf.length);
+		
+		/*Definir na resposta o tipo do arquivo*/
+		response.setContentType("application/octet-stream"); //para arquivos pdf, midia, etc...
+		
+		/*Definir o cabeçalho da resposta*/
+		String headerKey = "Content-Disposition";
+		String headerValue = String.format("attchment; filename=\"%s\"", "relatorio.pdf");
+		response.setHeader(headerKey, headerValue);
+		
+		/*Finaliza a resposta para o navegador*/
+		response.getOutputStream().write(pdf); //escreve os bytes do pdf
 	}
 	
 	
