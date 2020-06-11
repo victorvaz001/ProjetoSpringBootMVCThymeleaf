@@ -12,6 +12,15 @@
 * Maven
 * Spring Security
 * Jquery -> para consumir um Web Service do ViaCep
+* Jasper para relatórios
+
+
+## Funcionalidades
+
+* Cadastro de pessoa
+* Cadastro de telefones para pessoa
+* Login com Spring Security
+* Geração de relatorio de usuários
 
 ## Observações
 
