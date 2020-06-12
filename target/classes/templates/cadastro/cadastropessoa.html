@@ -77,10 +77,18 @@
 			</div>
 			
 			<div class="row" sec:authorize="hasAnyRole('ROLE_TECNICO')">
-				<div class="input-field col s12">
+				<div class="input-field col s6">
 					<label for="idade" class="active">Idade</label>
 					<input  id="idade"  name="idade" th:field="*{idade}" class="validate" placeholder="Informe a Idade"> 
-				</div>
+			</div>
+				
+			<div class="input-field col s6">
+				<label for="profissao" class="active">Profissão</label>
+					<select class="browser-default" th:field="*{profissao}" id="profissao">
+						<option th:each = "p : ${profissoes}" th:value="${p.id}" th:text="${p.nome}"> 	
+					</select>
+			</div>
+				
 			</div>	
 			
 			<div class="row">

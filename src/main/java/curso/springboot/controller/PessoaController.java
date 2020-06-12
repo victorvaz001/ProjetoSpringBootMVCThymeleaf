@@ -23,10 +23,13 @@ import org.springframework.web.servlet.ModelAndView;
 import curso.springboot.model.Pessoa;
 import curso.springboot.model.Telefone;
 import curso.springboot.repository.PessoaRepository;
+import curso.springboot.repository.ProfissaoRepository;
 import curso.springboot.repository.TelefoneRepository;
 
 @Controller
 public class PessoaController {
+	
+	//invocando os repositorys
 	
 	@Autowired //injeção de dependencias
 	private PessoaRepository  pessoaRepository;
@@ -37,6 +40,10 @@ public class PessoaController {
 	@Autowired
 	private ReportUtil reportUtil;
 	
+	@Autowired //para colocar o recurso dentro da classe
+	private ProfissaoRepository profissaoRepository;
+	
+	//metodo invado ao abrir a tela
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa") //redirecionamento de URL
 	public ModelAndView inicio() {
 		//passando objeto vazio
@@ -44,6 +51,7 @@ public class PessoaController {
 		modelAndView.addObject("pessoaobj", new Pessoa()); //passando objeto pra tela, para ficar em edição
 		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();//vindo do banco
 		modelAndView.addObject("pessoas", pessoasIt);
+		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 		return modelAndView;
 	}
 	
@@ -66,7 +74,8 @@ public class PessoaController {
 				msg.add(objectError.getDefaultMessage()); //vem das anotações, @NotNull, @NotEmpty do model Pessoa
 			}
 			
-			modelAndView.addObject("msg", msg);
+			modelAndView.addObject("msg", msg); //salvando pessoa
+			modelAndView.addObject("profissoes", profissaoRepository.findAll());
 			return modelAndView;
 		}
 		
@@ -101,6 +110,7 @@ public class PessoaController {
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa"); //retornar pra mesma tela
 		modelAndView.addObject("pessoaobj", pessoa.get()); //passando objeto pra tela, para ficar em edição
+		modelAndView.addObject("profissoes", profissaoRepository.findAll());//carregar os dados em tela
 		
 		return modelAndView;
 		
