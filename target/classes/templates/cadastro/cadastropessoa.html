@@ -48,8 +48,8 @@
 		</div>
 	<br/>
 		<!-- th:object="pessoaobj" -> carrega os dados na tela para edição -->
-		<form  action="salvarpessoa" id="formpessoa" method="post" th:object="${pessoaobj}" class="col s12"
-			onsubmit="return validarCampos()? true : false">
+		<form  action="salvarpessoa" id="formpessoa" method="post" th:object="${pessoaobj}" class="col s12" enctype="multipart/form-data"
+			onsubmit="return validarCampos()? true : false" >
 
 			<div class="row">
 				<div class="input-fiel col s6">
@@ -109,6 +109,13 @@
 					placeholder="Data Nasc.">
 				</div>
 				
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s12">
+					<label for="file" class="active">Currículo</label>
+					<input type="file" id="file" name="file" class="validate">
+				</div>
 			</div>
 			
 			<div class="row">
