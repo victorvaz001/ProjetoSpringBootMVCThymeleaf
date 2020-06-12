@@ -60,7 +60,11 @@ public class PessoaController {
 	//**/salvarpessoa" -> ignora qualquer coisa antes que ele intercepte o salvar pessoa de qualquer forma /savalarpessoa
 	@RequestMapping(method = RequestMethod.POST, 
 			value = "**/salvarpessoa", consumes = {"multipart/form-data"}) //para dizer que o formulario faz upload
-	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult, final MultipartFile file) throws IOException {
+	public ModelAndView salvar(@Valid Pessoa pessoa, 
+				BindingResult bindingResult, final MultipartFile file) throws IOException {
+		
+		System.out.println(file.getContentType());
+		System.out.println(file.getOriginalFilename());
 		
 		//carregando os telefones do objeto pessoa
 		pessoa.setTelefones(telefoneRepository.getTelefones(pessoa.getId()));
@@ -85,10 +89,16 @@ public class PessoaController {
 		
 		if(file.getSize() > 0) {//Cadastro um curriculo
 			pessoa.setCurriculo(file.getBytes());
+			pessoa.setTipoFileCurriculo(file.getContentType());
+			pessoa.setNomeFileCurriculo(file.getOriginalFilename());
 		}else {
 			if(pessoa.getId() != null && pessoa.getId() > 0) {//editanto
-			byte[] curriculoTemp = pessoaRepository.findById(pessoa.getId()).get().getCurriculo();
-			pessoa.setCurriculo(curriculoTemp);// manter o mesmo
+				
+			Pessoa pessoaTemp = pessoaRepository.findById(pessoa.getId()).get();
+			
+			pessoa.setCurriculo(pessoaTemp.getCurriculo());// manter o mesmo
+			pessoa.setTipoFileCurriculo(pessoaTemp.getTipoFileCurriculo());
+			pessoa.setNomeFileCurriculo(pessoaTemp.getNomeFileCurriculo());
 			}
 		}
 		
