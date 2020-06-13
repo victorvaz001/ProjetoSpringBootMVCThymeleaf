@@ -51,12 +51,12 @@ public class PessoaController {
 	private ProfissaoRepository profissaoRepository;
 	
 	//metodo invado ao abrir a tela
-	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa") //redirecionamento de URL
+	@RequestMapping(method = RequestMethod.GET, value = "**/cadastropessoa")
 	public ModelAndView inicio() {
-		//passando objeto vazio
-		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa"); //retornar pra mesma tela
-		modelAndView.addObject("pessoaobj", new Pessoa()); //passando objeto pra tela, para ficar em edição
-		modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));//vindo do banco
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		modelAndView.addObject("pessoaobj", new Pessoa());
+		modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 		return modelAndView;
 	}
@@ -64,14 +64,16 @@ public class PessoaController {
 	@GetMapping("/pessoaspag")
 	public ModelAndView carregaPessoaPorPaginacao(@PageableDefault(size = 5) Pageable pageable
 			, ModelAndView model, @RequestParam("nomepesquisa") String nomepesquisa) {
-	
-		Page<Pessoa> pagePessoa =  pessoaRepository.findPessoaByNamePage(nomepesquisa, pageable);
+		
+		Page<Pessoa> pagePessoa = pessoaRepository.findPessoaByNamePage(nomepesquisa,pageable);
 		model.addObject("pessoas", pagePessoa);
 		model.addObject("pessoaobj", new Pessoa());
 		model.addObject("nomepesquisa", nomepesquisa);
 		model.setViewName("cadastro/cadastropessoa");
 		
 		return model;
+		
+		
 	}
 	
 	//**/salvarpessoa" -> ignora qualquer coisa antes que ele intercepte o salvar pessoa de qualquer forma /savalarpessoa
@@ -148,8 +150,8 @@ public class PessoaController {
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa"); //retornar pra mesma tela
 		modelAndView.addObject("pessoaobj", pessoa.get()); //passando objeto pra tela, para ficar em edição
-		modelAndView.addObject("profissoes", profissaoRepository.findAll());//carregar os dados em tela
-		
+		modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));//carregar os dados em tela
+		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 		return modelAndView;
 		
 	}
