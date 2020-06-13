@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -51,10 +56,21 @@ public class PessoaController {
 		//passando objeto vazio
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa"); //retornar pra mesma tela
 		modelAndView.addObject("pessoaobj", new Pessoa()); //passando objeto pra tela, para ficar em edição
-		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();//vindo do banco
-		modelAndView.addObject("pessoas", pessoasIt);
+		modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));//vindo do banco
 		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 		return modelAndView;
+	}
+	
+	@GetMapping("/pessoaspag")
+	public ModelAndView carregaPessoaPorPaginacao(@PageableDefault(size = 5) Pageable pageable
+			, ModelAndView model) {
+		
+		Page<Pessoa> pagePessoa =  pessoaRepository.findAll(pageable);
+		model.addObject("pessoas", pagePessoa);
+		model.addObject("pessoaobj", new Pessoa());
+		model.setViewName("cadastro/cadastropessoa");
+		
+		return model;
 	}
 	
 	//**/salvarpessoa" -> ignora qualquer coisa antes que ele intercepte o salvar pessoa de qualquer forma /savalarpessoa
@@ -71,9 +87,8 @@ public class PessoaController {
 		//tratar os erros
 		if(bindingResult.hasErrors()) {
 			ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");//retorna na mesma tela
-			Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();//vindo do banco, consultar todos
-			modelAndView.addObject("pessoas", pessoasIt);//continuar mostrando a lista de pessoas
-			modelAndView.addObject("pessoaobj", pessoa); //vai dar o erro e vai continuar com o formulario preenchido, com os objetos
+			modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
+			modelAndView.addObject("pessoaobj", pessoa);
 			
 			//mostar as validações
 			List<String> msg = new ArrayList<String>();
@@ -108,8 +123,7 @@ public class PessoaController {
 		pessoaRepository.save(pessoa);
 		
 		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
-		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();//vindo do banco
-		andView.addObject("pessoas", pessoasIt);
+		andView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		andView.addObject("pessoaobj", new Pessoa()); //passando objeto pra tela, para ficar em edição(vazio)
 		
 		
@@ -120,12 +134,9 @@ public class PessoaController {
 	@RequestMapping(method = RequestMethod.GET, value = "/listapessoas")
 	public ModelAndView pessoas() {
 		
-		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
-		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();//vindo do banco
-		//pessoas -> objeto vindo da view
-		andView.addObject("pessoas", pessoasIt);
+		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");	//pessoas -> objeto vindo da view
+		andView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		andView.addObject("pessoaobj", new Pessoa()); //passando objeto pra tela, para ficar em edição(vazio)
-		
 		return andView;
 	}
 	
@@ -148,7 +159,7 @@ public class PessoaController {
 		pessoaRepository.deleteById(idpessoa);
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa"); //retornar pra mesma tela
-		modelAndView.addObject("pessoas", pessoaRepository.findAll()); //carrega a lista de pessoas, menos oque foi removido
+		modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));	//pessoas -> objeto vindo da view; //carrega a lista de pessoas, menos oque foi removido
 		modelAndView.addObject("pessoaobj", new Pessoa()); //retorna o objeto vazio
 		return modelAndView;
 		
@@ -314,5 +325,4 @@ public class PessoaController {
 			
 		}
 	}
-
 }
