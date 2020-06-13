@@ -33,6 +33,19 @@
 	form input[type=submit]{
 	color: white;
 	}
+	
+	table {
+		width: 100%
+	}
+	
+	table td, table th {
+		border: 1px solid grey;
+	}
+	
+	table th {
+		background: #eee;
+	}
+	
 </style>
 
 </head>
@@ -235,6 +248,22 @@
 			<td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Excluir</a></td>
 		</tr>
 	</table>
+	
+	<div class="row"  style="margin-top: 30px; text-align: center;">
+	
+		<span th:if="${pessoas.hasPrevious()}">
+			<a th:href="@{/pessoaspag(page=${pessoas.number-1}, size=${pessoas.size})}">Anterior</a>
+		</span>
+		
+		<th:block th:each="i: ${#numbers.sequence(0, pessoas.totalPages - 1)}"> 
+			<a th:href="@{/pessoaspag(page=${i}, size=${pessoas.size})}">[[ ${i} + 1 ]]</a>
+		</th:block>
+		
+		<span th:if="${pessoas.hasNext()}">
+			<a th:href="@{/pessoaspag(page=${pessoas.number+1}, size=${pessoas.size})}">Proximo</a>
+		</span>
+	
+	</div>
 	
 	<script type="text/javascript">
 		function validarCampos(){
