@@ -86,6 +86,10 @@ public class PessoaController {
 			return modelAndView;
 		}
 		
+		System.out.println(file.getContentType());
+		System.out.println(file.getName());
+		System.out.println(file.getOriginalFilename());
+		
 		if(file.getSize() > 0) {//Cadastro um curriculo
 			pessoa.setCurriculo(file.getBytes());
 			pessoa.setTipoFileCurriculo(file.getContentType());
@@ -290,24 +294,23 @@ public class PessoaController {
 	public void baixarcurriculo(@PathVariable("idpessoa") Long idpessoa, 
 			HttpServletResponse response) throws IOException {
 	
-		/*Consultar o objeto pessoa no banco de dados*/
-		Pessoa pessoa = pessoaRepository.findById(idpessoa).get(); //.get(); -> para retornar um tipo pessoa
-		if(pessoa.getCurriculo() != null) { //para saber se existe um arquivo para download
-			
-			/*Setar o tamanho da resposta*/
+		/*Consultar o obejto pessoa no banco de dados*/
+		Pessoa pessoa = pessoaRepository.findById(idpessoa).get();
+		if (pessoa.getCurriculo() != null) {
+	
+			/*Setar tamanho da resposta*/
 			response.setContentLength(pessoa.getCurriculo().length);
 			
 			/*Tipo do arquivo para download ou pode ser generica application/octet-stream*/
 			response.setContentType(pessoa.getTipoFileCurriculo());
 			
 			/*Define o cabeçalho da resposta*/
-			String headerkey = "Content-Disposition";
+			String headerKey = "Content-Disposition";
 			String headerValue = String.format("attachment; filename=\"%s\"", pessoa.getNomeFileCurriculo());
-			response.setHeader(headerkey, headerValue);
+			response.setHeader(headerKey, headerValue);
 			
 			/*Finaliza a resposta passando o arquivo*/
 			response.getOutputStream().write(pessoa.getCurriculo());
-			
 			
 		}
 	}
