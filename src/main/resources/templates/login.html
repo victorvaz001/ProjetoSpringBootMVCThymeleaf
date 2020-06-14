@@ -47,15 +47,26 @@
 	
 	<form th:action="@{/login}" method="post" class="col s12">
 		
+		<div th:if="${param.error}"> 
+			<p>Usuario ou senha invalidos </p>
+		</div>
+		
+		<div th:if="${param.logout}"> 
+			<p>você foi logado </p>
+		</div>
+		
+		
+		
 		<h5>Acesso ao sistema</h5>
 		<div class="row">
 			<div class="input-fiel col s6">
 				<label>Login </label>
-				<input type="text" name="username" style="border-radius: 7px; border-bottom: none;">
+				<input type="text" name="username" style="border-radius: 7px; border-bottom: none;" required="required">
 				<label>Senha </label>
-				<input type="password" name="password" style="border-radius: 7px; border-bottom: none;">
+				<input type="password" name="password" style="border-radius: 7px; border-bottom: none;" required="required">
 			</div>
 		</div>
+			
 		
 		<div class="row">
 				<div class="input-field col s6">

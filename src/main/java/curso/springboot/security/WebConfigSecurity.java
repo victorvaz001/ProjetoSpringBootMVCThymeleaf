@@ -8,8 +8,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import curso.springboot.model.Usuario;
 
 @Configuration
 @EnableWebSecurity
@@ -50,6 +53,12 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 	@Override //Ignora URL especificas
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/materialize/**");
+	}
+	
+	public String getLoginUsuario() {
+		Usuario user = (Usuario) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		return user.getUsername().toString();
 	}
 
 }

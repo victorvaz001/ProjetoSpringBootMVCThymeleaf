@@ -51,6 +51,7 @@
 </head>
 <body>
 <a href="#" th:href="@{/logout}">Sair </a>
+
 	
 	<h3>Spring Boot + Thymeleaf + Materialize Desing Lite </h3> <br/>
 	<fieldset>
@@ -65,7 +66,8 @@
 		<!-- th:object="pessoaobj" -> carrega os dados na tela para edição -->
 		<form  action="salvarpessoa" id="formpessoa" method="post" th:object="${pessoaobj}" class="col s12" enctype="multipart/form-data"
 			onsubmit="return validarCampos()? true : false" >
-
+		
+	
 			<div class="row">
 				<div class="input-fiel col s6">
 					<label for="id" class="active">ID:</label> 
@@ -246,7 +248,7 @@
      <a th:if="${pessoa.curriculo == null}" style="color: red;">Não existe</a>
     </td>
    <td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Editar</a> </td>
-   <td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Excluir</a> </td>
+   <td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}" onclick="return confirm('Confirmar exclusão?');">Excluir</a> </td>
   </tr>
 	</table>
 	
@@ -370,6 +372,6 @@
         });
 
     </script>
-	
+    
 </body>
 </html>
